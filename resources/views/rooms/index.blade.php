@@ -13,7 +13,7 @@
                             <th>ชื่อห้อง</th>
                             <th>ความจุ</th>
                             <th>อุปกรณ์ถายในห้อง</th>
-                            <th>การจัดการ</th>
+                            <th colspan="2">การจัดการ</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,8 +27,10 @@
                                 <form action="{{ route('rooms.destroy', $room->room_id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">ลบ</button>
                                 </form>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger btn-sm">ลบ</button>
                             </td>
                         </tr>
                         @endforeach

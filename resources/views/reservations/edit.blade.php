@@ -4,7 +4,7 @@
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">แก่ไขการจอง</div>
+            <div class="card-header">แก้ไขการจอง</div>
             <div class="card-body">
                 <form method="POST" action="{{ route('reservations.update', $reservation->reservation_id) }}">
                     @csrf

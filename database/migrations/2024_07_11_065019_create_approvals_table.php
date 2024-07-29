@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('approval_status');
             $table->foreign('reservation_id')->references('reservation_id')->on('reservations');
             $table->timestamps();
-        });
-        
+        });        
     }
 
     /**

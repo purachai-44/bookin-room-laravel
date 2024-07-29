@@ -27,7 +27,7 @@ class RoomController extends Controller
         ]);
 
         Room::create($data);
-        return redirect()->route('rooms.index')->with('success', 'Room added successfully');
+        return redirect()->route('rooms.index')->with('success', 'เพิ่มห้องเรียนสำเร็จ!');
     }
 
     public function edit(Room $room)
@@ -44,13 +44,13 @@ class RoomController extends Controller
         ]);
 
         $room->update($data);
-        return redirect()->route('rooms.index')->with('success', 'Room updated successfully');
+        return redirect()->route('rooms.index')->with('success', 'แก้ไขสำเร็จ');
     }
 
     public function destroy(Room $room)
     {
         $room->delete();
-        return redirect()->route('rooms.index')->with('success', 'Room deleted successfully');
+        return redirect()->route('rooms.index')->with('success', 'ลบสำเร็จ');
     }
 }
 

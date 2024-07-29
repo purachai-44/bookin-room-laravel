@@ -16,19 +16,36 @@ class MemberController extends Controller
 
     public function update(Request $request)
     {
-        $member = Auth::user();
-        $data = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'phone' => 'required',
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+            'current_password' => 'nullable|string',
+            'password' => 'nullable|string|min:8|confirmed', 
         ]);
 
-        if ($request->filled('password')) {
-            $data['password'] = bcrypt($request->password);
+        $member = auth()->user();
+
+        // ตรวจสอบว่ามีการกรอกรหัสผ่านปัจจุบัน
+        if ($request->filled('current_password')) {
+            if (!Hash::check($request->current_password, $member->password)) {
+                throw ValidationException::withMessages([
+                    'current_password' => ['รหัสผ่านปัจจุบันไม่ถูกต้อง'],
+                ]);
+            }
+
+            // อัปเดตรหัสผ่านใหม่ถ้าผ่านการตรวจสอบ
+            $member->password = Hash::make($request->password);
         }
 
-        $member->update($data);
-        return redirect()->route('members.edit')->with('success', 'Profile updated successfully');
+        // อัปเดตข้อมูลอื่นๆ
+        $member->first_name = $request->first_name;
+        $member->last_name = $request->last_name;
+        $member->phone = $request->phone;
+
+        $member->save();
+
+        return redirect()->route('members.edit')->with('success', 'โปรไฟล์ได้รับการอัพเดทเรียบร้อยแล้ว');
     }
 
     public function destroy()

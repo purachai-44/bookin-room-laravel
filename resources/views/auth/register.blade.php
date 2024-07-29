@@ -4,7 +4,7 @@
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">ลงทะเบียน</div>
+            <div class="card-header">สมัครสมาชิก</div>
             <div class="card-body">
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
@@ -26,16 +26,23 @@
                     </div>
                     <div class="mb-3">
                         <label for="role" class="form-label">สถานะ</label>
-                        <input type="text" class="form-control" id="role" name="role" required>
+                        <select class="form-control" id="role" name="role" required>
+                            <option value="">-</option>
+                            <option value="student">นักศึกษา</option>
+                            <option value="teacher">อาจารย์</option>
+                            <option value="other">อื่นๆ</option>
+                        </select>
                     </div>
+
                     <div class="mb-3">
                         <label for="phone" class="form-label">เบอร์โทร</label>
                         <input type="text" class="form-control" id="phone" name="phone" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">ลงทะเบียน</button>
+                    <button type="submit" class="btn btn-primary">สมัครสมาชิก</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 @endsection
+

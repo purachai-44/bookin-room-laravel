@@ -10,10 +10,10 @@
                     <thead>
                         <tr>
                             <th>ผู้จอง</th>
-                            <th>จำนวนคน</th>
+                            <th>การใช้</th>
                             <th>ห้อง</th>
                             <th>สถานะ</th>
-                            <th>ผลการจอง</th>
+                            <th colspan="3">ผลการจอง</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,14 +34,17 @@
                                     @csrf
                                     <input type="hidden" name="approval_status" value="approved">
                                     <button type="submit" class="btn btn-success btn-sm">อนุมัติ</button>
-                                </form>
-                                
+                                </form> 
+                            </td>
+                            <td>
                                 <form action="{{ route('approvals.reject', $reservation->reservation_id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     <input type="hidden" name="approval_status" value="rejected">
                                     <button type="submit" class="btn btn-danger btn-sm">ยกเลิก</button>
                                 </form>
-                                
+                            </td>
+                            <td>
+                                <a href="{{ route('reservations.edit', $reservation->reservation_id) }}" class="btn btn-primary btn-sm">แก้ไข</a>
                             </td>
                         </tr>
                         @endforeach
