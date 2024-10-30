@@ -39,7 +39,15 @@
             cancelButtonText: 'ยกเลิก'
         }).then((result) => {
             if (result.isConfirmed) {
-                document.getElementById('room-form').submit();
+                Swal.fire({
+                    title: "สำเร็จ!",
+                    text: "เพิ่มห้องสำเร็จ",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    document.getElementById('room-form').submit();
+                });
             }
         });
     }

@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('reservations');  
         Schema::create('reservations', function (Blueprint $table) {
             $table->id('reservation_id');
             $table->string('purpose');
@@ -18,7 +19,7 @@ return new class extends Migration
             $table->time('end_time');
             $table->date('start_date');
             $table->date('end_date');
-            $table->unsignedBigInteger('member_id');
+            $table->string('member_id');
             $table->unsignedBigInteger('room_id');
             $table->string('status')->default('pending');
             $table->foreign('member_id')->references('member_id')->on('members');

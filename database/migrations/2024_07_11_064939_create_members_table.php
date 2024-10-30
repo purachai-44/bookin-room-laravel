@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('members', function (Blueprint $table) {
-            $table->id('member_id');
+            $table->id('id');
+            $table->string('member_id')->unique(); 
             $table->string('password');
             $table->string('first_name');
             $table->string('last_name');
@@ -20,12 +21,9 @@ return new class extends Migration
             $table->string('phone');
             $table->timestamps();
         });
-        
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('members');

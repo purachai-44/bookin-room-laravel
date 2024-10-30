@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('approval_id');
             $table->unsignedBigInteger('reservation_id');
             $table->string('approval_status');
-            $table->foreign('reservation_id')->references('reservation_id')->on('reservations');
+            $table->foreign('reservation_id')->references('reservation_id')->on('reservations'); 
             $table->timestamps();
         });        
     }

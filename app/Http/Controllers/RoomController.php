@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Reservation; 
 use App\Models\Room;
+use Carbon\Carbon;
 
 class RoomController extends Controller
 {
@@ -47,10 +49,42 @@ class RoomController extends Controller
         return redirect()->route('rooms.index')->with('success', 'แก้ไขสำเร็จ');
     }
 
-    public function destroy(Room $room)
+    public function show()
     {
-        $room->delete();
-        return redirect()->route('rooms.index')->with('success', 'ลบสำเร็จ');
-    }
-}
+        $currentDateTime = Carbon::now()->setTimezone('Asia/Bangkok');  
+    
+    
+        $rooms = Room::all();
+        
+        foreach ($rooms as $room) {
+    
+        
+            $currentReservation = Reservation::where('room_id', $room->room_id)
+                ->where('status', 'approved')
+                ->where(function ($query) use ($currentDateTime) {
+                    $query->where(function ($q) use ($currentDateTime) {
+                        $q->whereDate('start_date', '=', $currentDateTime->toDateString()) 
+                          ->whereTime('start_time', '<=', $currentDateTime->toTimeString())  
+                          ->whereTime('end_time', '>', $currentDateTime->toTimeString());  
+                    })->orWhere(function ($q) use ($currentDateTime) {
+                        $q->whereDate('start_date', '<=', $currentDateTime->toDateString()) 
+                          ->whereDate('end_date', '>=', $currentDateTime->toDateString()) 
+                          ->where(function ($subQuery) use ($currentDateTime) {
+                              $subQuery->whereTime('start_time', '<=', $currentDateTime->toTimeString()) 
+                                       ->whereTime('end_time', '>', $currentDateTime->toTimeString());
+                          });
+                    });
+                })
+                ->first();
 
+            $room->is_occupied = $currentReservation !== null;
+        }
+    
+
+        return view('rooms.show', compact('rooms', 'currentDateTime'));
+    }
+    
+    
+    
+
+}

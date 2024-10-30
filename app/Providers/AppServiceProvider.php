@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Providers;
-
+use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,8 +17,9 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot()
     {
-        //
+        // ตั้งค่า locale ให้เป็นไทย
+        \Carbon\Carbon::setLocale('th');
     }
 }
